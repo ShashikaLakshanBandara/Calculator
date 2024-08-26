@@ -1,13 +1,13 @@
 package com.octochimp.calculator.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -16,15 +16,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.octochimp.calculator.CalculatorState
 import com.octochimp.calculator.R
 import com.octochimp.calculator.screens.tools.innerShadow
 import com.octochimp.calculator.ui.theme.CalculatorTheme
 
 
 @Composable
-fun UpperCard() {
+fun UpperCard(state: CalculatorState) {
     Box(
         modifier = Modifier
             .padding(16.dp)
@@ -57,25 +59,37 @@ fun UpperCard() {
             verticalArrangement = Arrangement.SpaceAround
         ) {
             Text(
-                text = "0",
+                modifier = Modifier
+                    .horizontalScroll(rememberScrollState()),
+                text = state.firstLine,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                text = "+",
+                text = state.operator,
                 style = MaterialTheme.typography.bodySmall
             )
             Text(
 
-                text = "0",
+                text = state.secondLine,
                 style = MaterialTheme.typography.bodyMedium
             )
-            Text(
-                text = "=",
-                style = MaterialTheme.typography.bodySmall
-            )
+            if (state.isShowEqual) {
+                Text(
+                    text = "=",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            } else {
+                Text(
+                    text = "",
+                    style = MaterialTheme.typography.bodySmall
+                )
+            }
+
             Text(
 
-                text = "0",
+                text = state.answer,
                 style = MaterialTheme.typography.bodyMedium
             )
 
@@ -85,11 +99,11 @@ fun UpperCard() {
 
 }
 
-@Preview(showBackground = true,)
+@Preview(showBackground = true)
 @Composable
 fun PreviewUpperCard() {
     CalculatorTheme {
-        UpperCard()
+        UpperCard(CalculatorState())
     }
 
 }

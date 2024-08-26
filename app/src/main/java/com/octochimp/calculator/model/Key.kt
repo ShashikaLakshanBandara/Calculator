@@ -1,6 +1,9 @@
 package com.octochimp.calculator.model
 
+import com.octochimp.calculator.CalculatorEvents
+import com.octochimp.calculator.CalculatorViewModel
+
 data class Key(
     val keyName: String,
-    val onTap: () -> Unit,
+    val onPressed:(onEvent: (CalculatorEvents) -> Unit) -> Unit
 )

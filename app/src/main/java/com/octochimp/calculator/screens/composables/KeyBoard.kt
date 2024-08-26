@@ -2,6 +2,7 @@ package com.octochimp.calculator.screens.composables
 
 import android.graphics.BlurMaskFilter
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.ModeNight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.octochimp.calculator.CalculatorEvents
+import com.octochimp.calculator.CalculatorState
 import com.octochimp.calculator.R
 import com.octochimp.calculator.data.keys
 
@@ -66,7 +71,24 @@ fun Modifier.shadow(
 
 
 @Composable
-fun KeyBoard() {
+fun KeyBoard(onEvent: (CalculatorEvents) -> Unit, state: CalculatorState) {
+
+    val keyBackground :Int
+    val keyBackgroundFrameColor :Int
+    val keyColor :Int
+
+    if (state.lightMode) {
+        keyBackground = R.color.key_background_light
+        keyBackgroundFrameColor = R.color.main_background_color_light
+        keyColor = R.color.key_color_light
+    } else {
+        keyBackground = R.color.key_background_dark
+        keyBackgroundFrameColor = R.color.main_background_color_dark
+        keyColor = R.color.key_color_dark
+    }
+
+
+
     LazyVerticalGrid(
         modifier = Modifier
             .padding(8.dp)
@@ -79,7 +101,7 @@ fun KeyBoard() {
             Box(
                 modifier = Modifier
                     .background(
-                        color = colorResource(id = R.color.card_background)
+                        color = colorResource(keyBackgroundFrameColor)
                     )
                     .padding(4.dp)
             ) {
@@ -100,18 +122,28 @@ fun KeyBoard() {
                         )
 
                         .background(
-                            color = colorResource(id = R.color.key_background),
+                            color = colorResource(id = keyBackground),
                             shape = RoundedCornerShape(5.dp)
                         )
                         .size(
                             width = 50.dp, height = 50.dp
-                        ),
+                        )
+                        .clickable {
+                            key.onPressed(onEvent)
+                        },
                     contentAlignment = Alignment.Center,
                 ) {
                     if(key.keyName == ""){
+                        val buttonIcon :ImageVector = if(state.lightMode){
+                            Icons.Rounded.ModeNight
+                        }else{
+                            Icons.Rounded.LightMode
+                        }
+
+
                         Icon(
-                            imageVector = Icons.Rounded.LightMode,
-                            tint = colorResource(id = R.color.key_color),
+                            imageVector = buttonIcon,
+                            tint = colorResource(keyColor),
                             contentDescription = null
                         )
                     }
@@ -119,7 +151,7 @@ fun KeyBoard() {
                         Text(
                             text = key.keyName, style = TextStyle(
                                 fontWeight = FontWeight.Bold,
-                                color = colorResource(id = R.color.key_color),
+                                color = colorResource(keyColor),
                                 fontSize = 20.sp
                             )
                         )
@@ -134,5 +166,5 @@ fun KeyBoard() {
 @Preview(showBackground = true, backgroundColor = 0xFF56A29B)
 @Composable
 fun PreviewKeyBoard() {
-    KeyBoard()
+   // KeyBoard(onEvent)
 }

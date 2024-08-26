@@ -14,8 +14,15 @@
     <color name="upper_card_glare">#FBFBFB</color>
 
 
-    <color name="key_background">#434343</color>
-    <color name="key_color">#E2E0E0</color>
+    <color name="main_background_color_dark">#353535</color>
+    <color name="main_background_color_light">#D3D3D3</color>
+
+    <color name="key_background_dark">#434343</color>
+    <color name="key_background_light">#F0F0F0</color>
+
+
+    <color name="key_color_dark">#E2E0E0</color>
+    <color name="key_color_light">#5F5F5F</color>
     <color name="key_shadow">#000000</color>
 
 
