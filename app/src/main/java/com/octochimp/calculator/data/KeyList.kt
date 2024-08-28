@@ -5,18 +5,18 @@ import com.octochimp.calculator.model.Key
 
 
 val keys = listOf(
-    Key(keyName = "AC", onPressed = {
-        onEvent->
+    Key(keyName = "AC", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickACButton)
     }
 
     ),
-    Key(keyName = "CE", onPressed = {
-        onEvents->
+    Key(keyName = "CE", onPressed = { onEvents ->
         onEvents(CalculatorEvents.onClickCEButton)
 
     }),
-    Key(keyName = "ON", onPressed = {}),
+    Key(keyName = "-/+", onPressed = { onEvents ->
+        onEvents(CalculatorEvents.onClickNegativeButton)
+    }),
 
     Key(keyName = "X", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickOperator("*"))
@@ -31,7 +31,7 @@ val keys = listOf(
     Key(keyName = "9", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickNumber("9"))
     }),
-    Key(keyName = "/", onPressed = {onEvent ->
+    Key(keyName = "/", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickOperator("/"))
 
     }),
@@ -44,8 +44,7 @@ val keys = listOf(
     Key(keyName = "6", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickNumber("6"))
     }),
-    Key(keyName = "-", onPressed = {
-            onEvent ->
+    Key(keyName = "-", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickOperator("-"))
 
     }),
@@ -58,8 +57,7 @@ val keys = listOf(
     Key(keyName = "3", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickNumber("3"))
     }),
-    Key(keyName = "+", onPressed = {
-            onEvent ->
+    Key(keyName = "+", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickOperator("+"))
 
     }),
@@ -67,15 +65,13 @@ val keys = listOf(
         onEvent(CalculatorEvents.onClickNumber("0"))
     }),
     Key(keyName = ".", onPressed = { onEvent ->
-        onEvent(CalculatorEvents.onClickNumber("."))
+        onEvent(CalculatorEvents.onClickDecimalPoint)
     }),
-    Key(keyName = "=", onPressed = {
-            onEvent ->
+    Key(keyName = "=", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClickEqualButton)
 
     }),
-    Key(keyName = "", onPressed = {
-        onEvent->
+    Key(keyName = "", onPressed = { onEvent ->
         onEvent(CalculatorEvents.onClicklightModeButton)
     }),
 

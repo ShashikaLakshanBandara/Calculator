@@ -8,6 +8,8 @@ sealed interface CalculatorEvents {
     data object onClickACButton:CalculatorEvents
     data object onClickCEButton:CalculatorEvents
     data object onClicklightModeButton:CalculatorEvents
+    data object onClickNegativeButton : CalculatorEvents
+    data object onClickDecimalPoint:CalculatorEvents
 
 
 }

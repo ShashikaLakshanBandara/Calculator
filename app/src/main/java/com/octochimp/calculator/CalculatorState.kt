@@ -7,9 +7,7 @@ data class CalculatorState(
     val secondLine :String = "",
     val isShowEqual : Boolean = false,
     val answer : String = "",
-    val clear : Boolean = false,
-    val power : Boolean = false,
     val lightMode:Boolean = true,
-
+    val isPositiveNumber:Boolean = true
 
 )

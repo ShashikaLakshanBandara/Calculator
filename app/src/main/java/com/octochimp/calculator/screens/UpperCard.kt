@@ -58,23 +58,12 @@ fun UpperCard(state: CalculatorState) {
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(
-                modifier = Modifier
-                    .horizontalScroll(rememberScrollState()),
-                text = state.firstLine,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            DisplayLine(state.firstLine)
             Text(
                 text = state.operator,
                 style = MaterialTheme.typography.bodySmall
             )
-            Text(
-
-                text = state.secondLine,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            DisplayLine(state.secondLine)
             if (state.isShowEqual) {
                 Text(
                     text = "=",
@@ -86,17 +75,24 @@ fun UpperCard(state: CalculatorState) {
                     style = MaterialTheme.typography.bodySmall
                 )
             }
-
-            Text(
-
-                text = state.answer,
-                style = MaterialTheme.typography.bodyMedium
-            )
+            DisplayLine(state.answer)
 
         }
 
     }
 
+}
+
+@Composable
+fun DisplayLine(text:String){
+    Text(
+        modifier = Modifier
+            .horizontalScroll(rememberScrollState()),
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        text = text,
+        style = MaterialTheme.typography.bodyMedium
+    )
 }
 
 @Preview(showBackground = true)

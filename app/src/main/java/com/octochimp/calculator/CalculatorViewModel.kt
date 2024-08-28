@@ -26,7 +26,7 @@ class CalculatorViewModel : ViewModel() {
             is CalculatorEvents.onClickNumber -> {
 
                 if (_state.value.answer != "") {
-                    reset(event.key,"")
+                    reset(event.key, "")
 
                 } else {
                     if (_state.value.isOperatorPressed) {
@@ -71,8 +71,8 @@ class CalculatorViewModel : ViewModel() {
 
             is CalculatorEvents.onClickOperator -> {
 
-                if(_state.value.answer !=""){
-                    reset(_state.value.answer,event.operator)
+                if (_state.value.answer != "") {
+                    reset(_state.value.answer, event.operator)
                 }
                 _state.update {
                     it.copy(
@@ -99,27 +99,86 @@ class CalculatorViewModel : ViewModel() {
             }
 
             CalculatorEvents.onClickACButton -> {
-                reset("0","")
+                reset("0", "")
             }
 
             CalculatorEvents.onClickCEButton -> {
-                if (_state.value.isOperatorPressed) {
-                    _state.update {
-                        it.copy(
-                            secondLine = it.secondLine.dropLast(1)
-                        )
+                if (_state.value.answer == "") {
+                    if (_state.value.isOperatorPressed) {
+                        _state.update {
+                            it.copy(
+                                secondLine = it.secondLine.dropLast(1)
+                            )
+                        }
+                    } else {
+                        _state.update {
+                            it.copy(
+                                firstLine = it.firstLine.dropLast(1)
+                            )
+                        }
                     }
+                }
+
+            }
+
+            CalculatorEvents.onClickNegativeButton -> {
+                if (!_state.value.isOperatorPressed) {
+                    if (!alreadyContains(_state.value.firstLine,'-')) {
+                        _state.update {
+                            it.copy(
+                                firstLine = addNegative(it.firstLine)
+                            )
+                        }
+                    }
+
                 } else {
-                    _state.update {
-                        it.copy(
-                            firstLine = it.firstLine.dropLast(1)
-                        )
+                    if (!alreadyContains(_state.value.secondLine,'-')) {
+                        _state.update {
+                            it.copy(
+                                secondLine = addNegative(it.secondLine)
+                            )
+                        }
                     }
+
+                }
+            }
+
+            CalculatorEvents.onClickDecimalPoint -> {
+                if (!_state.value.isOperatorPressed) {
+                    if (!alreadyContains(_state.value.firstLine,'.')) {
+                        _state.update {
+                            it.copy(
+                                firstLine = addDecimalPoint(it.firstLine)
+                            )
+                        }
+                    }
+
+                } else {
+                    if (!alreadyContains(_state.value.secondLine,'.')) {
+                        _state.update {
+                            it.copy(
+                                secondLine = addDecimalPoint(it.secondLine)
+                            )
+                        }
+                    }
+
                 }
             }
         }
     }
-    private fun reset(value:String,operator:String){
+    private fun addDecimalPoint(text: String): String {
+        return "$text."
+    }
+
+    private fun alreadyContains(text: String, char:Char): Boolean {
+        return text.toCharArray().contains(char)
+    }
+
+    private fun addNegative(text: String): String {
+        return "-$text"
+    }
+
+    private fun reset(value: String, operator: String) {
         _state.update {
             it.copy(
                 firstLine = value,
